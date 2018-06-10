@@ -12,7 +12,7 @@ contract DappTokenSale {
 
     function DappTokenSale(DappToken _tokenContract, uint256 _tokenPrice) public {
         admin = msg.sender;
-        tokenContract = _tokenContract; 
+        tokenContract = _tokenContract;
         tokenPrice = _tokenPrice;
     }
 
@@ -35,8 +35,7 @@ contract DappTokenSale {
         require(tokenContract.transfer(admin, tokenContract.balanceOf(this)));
 
         // UPDATE: Let's not destroy the contract here
-        // Just transfer the balance "The real money from buyer" to the admin
-        //admin.transfer(address(this).balance); //same as below:
-        selfdestruct(admin);
+        // Just transfer the balance to the admin
+        admin.transfer(address(this).balance);
     }
 }

@@ -25,7 +25,6 @@ contract('DappTokenSale', function(accounts) {
     });
   });
 
-
   it('facilitates token buying', function() {
     return DappToken.deployed().then(function(instance) {
       // Grab token instance first
@@ -60,8 +59,6 @@ contract('DappTokenSale', function(accounts) {
       return tokenSaleInstance.buyTokens(800000, { from: buyer, value: numberOfTokens * tokenPrice })
     }).then(assert.fail).catch(function(error) {
       assert(error.message.indexOf('revert') >= 0, 'cannot purchase more tokens than available');
-
-      //console.log('admin:' + web3.eth.getBalance(accounts[0]));
     });
   });
 
@@ -83,13 +80,9 @@ contract('DappTokenSale', function(accounts) {
       return tokenInstance.balanceOf(admin);
     }).then(function(balance) {
       assert.equal(balance.toNumber(), 999990, 'returns all unsold dapp tokens to admin');
-      // Check that the contract has no balance -> should be no Eth in this contract
-      //console.log('token:' + tokenSaleInstance.address);
-      //console.log('admin:' + web3.eth.getBalance(accounts[0]));
-
+      // Check that the contract has no balance
       balance = web3.eth.getBalance(tokenSaleInstance.address)
       assert.equal(balance.toNumber(), 0);
     });
   });
-
 });
